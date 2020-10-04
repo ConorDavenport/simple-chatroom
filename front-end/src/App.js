@@ -1,26 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
+import { w3cwebsocket as W3CWebSocket } from 'websocket'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+// Connect to HTTP server on port 8000
+const client = new W3CWebSocket('ws://localhost:8000')
 
-export default App;
+export default class App extends React.Component {
+  componentDidMount() {
+    client.onopen = () => {
+      console.log('Websocket Client Connected')
+    }
+    client.onmessage = () => {
+      const data = JSON.parse(message.data).utf8Data
+      // Do stuff with data
+    }
+  }
+  render() {
+    return (
+      <div className="App">
+      
+      </div>
+    );
+  }
+}
