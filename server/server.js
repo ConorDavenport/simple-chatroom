@@ -29,15 +29,18 @@ wss.on('connection', (ws) => {
   ws.send('Hello Client')
 })
 
-//------------------------------------//
-//      DATABASE INITIALISATION       //
-//------------------------------------//
-
-
-
 server.listen(PORT, () => {
   console.log(`Server started listening on port ${server.address().port}`)
 })
+
+//------------------------------------//
+//      DATABASE INITIALISATION       //
+//------------------------------------//
+mongoose.connect(process.env.DB_CONNECTION,
+  { userNewUrlParser: true, useUnifiedTopology: true },
+  () => { console.log('Connected to Database') }  
+)
+
 
 // const clients = new Map()
 
