@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const http = require('http')
 const WebSocket = require('ws')
 const cors = require('cors')
+require('dotenv/config')
 
 //------------------------------------//
 //      SERVER INITIALISATION         //
@@ -27,6 +28,7 @@ wss.on('connection', (ws) => {
     ws.send(`Echo ${message}`)
   })
   ws.send('Hello Client')
+  console.log('Client Connected')
 })
 
 server.listen(PORT, () => {
@@ -37,7 +39,7 @@ server.listen(PORT, () => {
 //      DATABASE INITIALISATION       //
 //------------------------------------//
 mongoose.connect(process.env.DB_CONNECTION,
-  { userNewUrlParser: true, useUnifiedTopology: true },
+  { useNewUrlParser: true, useUnifiedTopology: true },
   () => { console.log('Connected to Database') }  
 )
 
