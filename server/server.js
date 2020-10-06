@@ -5,6 +5,9 @@ const http = require('http')
 const WebSocket = require('ws')
 const cors = require('cors')
 
+//------------------------------------//
+//      SERVER INITIALISATION         //
+//------------------------------------//
 const PORT = process.env.port || 8000
 
 app.use(express.urlencoded({ extended: true }));
@@ -25,6 +28,12 @@ wss.on('connection', (ws) => {
   })
   ws.send('Hello Client')
 })
+
+//------------------------------------//
+//      DATABASE INITIALISATION       //
+//------------------------------------//
+
+
 
 server.listen(PORT, () => {
   console.log(`Server started listening on port ${server.address().port}`)
