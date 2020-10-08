@@ -2,6 +2,7 @@ import React from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket'
 import './App.css';
 import JoinRoom from './components/JoinRoom'
+const axios = require('axios')
 
 function time() {
   return (new Date().toLocaleTimeString())
@@ -11,6 +12,12 @@ function time() {
 const client = new W3CWebSocket('ws://localhost:8000')
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      uuid: null
+    }
+  }
   componentDidMount() {
     client.onopen = () => {
       console.log(time() + ': Websocket Client Connected')
@@ -24,7 +31,9 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <JoinRoom />
+        <JoinRoom 
+          uuid={this.state.uuid}
+        />
       </div>
     );
   }
