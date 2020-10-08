@@ -1,7 +1,7 @@
 import React from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket'
 import './App.css';
-import JoinRoom from './components/JoinRoom'
+import JoinRoom from './JoinRoom'
 const axios = require('axios')
 
 function time() {
