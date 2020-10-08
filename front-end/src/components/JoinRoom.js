@@ -1,40 +1,51 @@
 import React from 'react';
-import './JoinRoom.css'
+import { useHistory } from 'react-router-dom'
 const axios = require('axios')
 
 export default class JoinRoom extends React.Component {
-  handleSubmit(event) {
-    event.preventDefault()
-    const roomCode = event.target[0].value
-    const userName = event.target[1].value
+   render() {
+    return (
+      <div>
+        <div>
+          <label>{'Room Code: '}</label>
+          <input type="text" id="roomCode" required/>
+        </div>
+        <div>
+          <label>{'Name: '}</label>
+          <input type="text" id="userName" required/>
+        </div>
+        <div>
+          <Submit />
+        </div>
+      </div>
+    )
+  }
+}
+
+
+const Submit = () => {
+  const history = useHistory();
+
+  const handleClick = () => {
+    const roomCode = document.getElementById('roomCode').value
+    const userName = document.getElementById('userName').value
     const body = {
       roomCode: roomCode,
       userName: userName
     }
-    axios.put('http://localhost:8000/', body)
+    axios.put('http://localhost:8000/rooms/request', body)
     .then(() => {
-      console.log('Requested Room')
+      console.log(`Requested Room ${roomCode}`)
     })
     .catch((err) => {
       console.log(err)
     })
+    history.push(`/${roomCode}`)
   }
 
-  render() {
-    return (
-      <form id="joinRoomForm" onSubmit={this.handleSubmit}> 
-        <div>
-          <label>{'Room Code: '}</label>
-          <input type="text" name="roomcode" required/>
-        </div>
-        <div>
-          <label>{'Name: '}</label>
-          <input type="text" name="userName" required/>
-        </div>
-        <div>
-          <input type="submit" value="Submit" />
-        </div>
-      </form>
-    )
-  }
+  return (
+    <div>
+      <button onClick={handleClick}>{'Submit'}</button>
+    </div>
+  );
 }
