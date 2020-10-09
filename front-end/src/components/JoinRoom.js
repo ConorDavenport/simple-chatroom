@@ -40,7 +40,7 @@ const Submit = () => {
     .catch((err) => {
       console.log(err)
     })
-    history.push(`/${roomCode}`)
+    history.push(`/:${roomCode}`)
   }
 
   return (
