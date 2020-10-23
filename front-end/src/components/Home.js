@@ -5,7 +5,8 @@ export default class Room extends React.Component {
   render() {
     return (
       <div>
-        <JoinRoom />
+        <JoinRoom 
+          name={this.props.name}/>
       </div>
     )
   }
