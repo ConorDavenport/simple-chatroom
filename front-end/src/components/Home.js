@@ -6,7 +6,7 @@ export default class Room extends React.Component {
     return (
       <div>
         <JoinRoom 
-          name={this.props.name}/>
+          changeName={this.props.changeName}/>
       </div>
     )
   }

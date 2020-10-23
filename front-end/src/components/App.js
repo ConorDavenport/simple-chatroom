@@ -15,6 +15,11 @@ export default class App extends React.Component {
       name: 'User',
       messages: [],
     }
+    this.changeName = this.changeName.bind(this)
+  }
+
+  changeName(n) {
+    this.setState({ name: n })
   }
 
   render() {
@@ -26,13 +31,13 @@ export default class App extends React.Component {
               exact path='/'
               render={(props) => (
                 <Home {...props} 
-                  name={this.state.name} />
+                  changeName={this.changeName} />
               )} />
             <Route 
               exact path='/chat-room'
               render={(props) => (
                 <Room {...props} 
-                  name={this.state.name} />
+                  changeName={this.changeName} />
               )} />
           </Switch>
         </div>

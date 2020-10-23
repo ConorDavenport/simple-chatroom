@@ -3,19 +3,16 @@ import { useHistory } from 'react-router-dom'
 const axios = require('axios')
 
 export default class JoinRoom extends React.Component {
-   render() {
+  render() {
     return (
       <div>
-        <div>
-          <label>{'Room Code: '}</label>
-          <input type="text" id="roomCode" required/>
-        </div>
         <div>
           <label>{'Name: '}</label>
           <input type="text" id="userName" required/>
         </div>
         <div>
-          <Submit />
+          <Submit 
+            changeName={this.props.changeName}/>
         </div>
       </div>
     )
@@ -23,29 +20,26 @@ export default class JoinRoom extends React.Component {
 }
 
 
-const Submit = () => {
+const Submit = (props) => {
   const history = useHistory();
 
   const handleClick = () => {
-    const roomCode = document.getElementById('roomCode').value
-    const userName = document.getElementById('userName').value
-    const body = {
-      roomCode: roomCode,
-      userName: userName
-    }
-    axios.put('http://localhost:8000/rooms/request', body)
-    .then(() => {
-      console.log(`Requested Room ${roomCode}`)
+    props.changeName(document.getElementById('userName').value)
+
+    axios.get('http://localhost:8000/rooms/request')
+    .then((res) => {
+      console.log('Entering Room')
+      console.log(res.data)
     })
     .catch((err) => {
       console.log(err)
     })
-    history.push(`/:${roomCode}`)
+    history.push('/chat-room')
   }
 
   return (
     <div>
-      <button onClick={handleClick}>{'Submit'}</button>
+      <button onClick={handleClick}>{'Join'}</button>
     </div>
   );
 }
