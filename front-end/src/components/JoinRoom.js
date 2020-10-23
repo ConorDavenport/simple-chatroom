@@ -19,7 +19,6 @@ export default class JoinRoom extends React.Component {
   }
 }
 
-
 const Submit = (props) => {
   const history = useHistory();
 
@@ -34,7 +33,7 @@ const Submit = (props) => {
     .catch((err) => {
       console.log(err)
     })
-    history.push('/chat-room')
+    history.push('/rooms/chat')
   }
 
   return (
