@@ -33,7 +33,7 @@ const Submit = (props) => {
     .catch((err) => {
       console.log(err)
     })
-    history.push('/rooms/chat')
+    history.push('/chat-room')
   }
 
   return (
