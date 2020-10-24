@@ -8,9 +8,6 @@ export default class Room extends React.Component {
   constructor() {
     super()
     this.handleClick = this.handleClick.bind(this)
-  }
-
-  componentDidMount() {
     client = new W3CWebSocket('ws://localhost:8000')
     client.onopen = () => {
       console.log('WebSocket Connected')
@@ -35,7 +32,7 @@ export default class Room extends React.Component {
         <div>{`Hello ${this.props.name}`}</div>
         <input type='text' id='message'/>
         <button onClick={this.handleClick}>Submit</button>
-        <Feed />
+        <Feed client={client}/>
       </div>
     )
   }
