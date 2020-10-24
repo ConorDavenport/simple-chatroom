@@ -24,15 +24,6 @@ const Submit = (props) => {
 
   const handleClick = () => {
     props.changeName(document.getElementById('userName').value)
-
-    axios.get('http://localhost:8000/rooms/request')
-    .then((res) => {
-      console.log('Entering Room')
-      console.log(res.data)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
     history.push('/chat-room')
   }
 
