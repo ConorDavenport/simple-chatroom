@@ -16,10 +16,10 @@ export default class Room extends React.Component {
 
   handleClick() {
     const message = document.getElementById('message').value
-    client.send({
+    client.send(JSON.stringify({
       message: message,
       user: this.props.name
-    })
+    }))
   }
 
   render() {
