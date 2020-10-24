@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom'
-const axios = require('axios')
 
 export default class JoinRoom extends React.Component {
   render() {
@@ -8,7 +7,7 @@ export default class JoinRoom extends React.Component {
       <div>
         <div>
           <label>{'Name: '}</label>
-          <input type="text" id="userName" required/>
+          <input type="text" id="userName" autoComplete="off" required/>
         </div>
         <div>
           <Submit 
