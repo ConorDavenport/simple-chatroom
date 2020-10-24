@@ -1,14 +1,18 @@
 const mongoose = require('mongoose')
 
 const RoomSchema = mongoose.Schema({
-  code: {
+  user: {
     type: String,
     required: true
   },
-  users: [{
-    id: { type: Number },
-    name: { type: String }
-  }]
+  message: {
+    type: String,
+    required: true
+  },
+  date: {
+    type: Date,
+    required: true
+  }
 })
 
 module.exports = mongoose.model('Rooms', RoomSchema)
