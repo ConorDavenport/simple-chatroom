@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const RoomSchema = mongoose.Schema({
+const MessageSchema = mongoose.Schema({
   user: {
     type: String,
     required: true
@@ -15,4 +15,4 @@ const RoomSchema = mongoose.Schema({
   }
 })
 
-module.exports = mongoose.model('Rooms', RoomSchema)
+module.exports = mongoose.model('Messages', MessageSchema)
