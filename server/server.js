@@ -22,6 +22,7 @@ app.use(cors()) // allow api calls from any ip
 
 // import routes
 const roomsRoutes = require('./routes/rooms')
+const { parse } = require('path')
 
 app.use('/rooms', roomsRoutes)
 
@@ -46,14 +47,19 @@ wss.on('connection', (ws) => {
       message: msg.message,
       date: Date.now(),
     }).save()
+    .then((m) => {
+      const messageID = m._id
+      let parsedMessage = JSON.parse(message)
+      parsedMessage.id = messageID
+      message = JSON.stringify(parsedMessage)
+      wss.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(message)
+        }
+      })
+    })
     .catch((err) => {
       console.log(err)
-    })
-    
-    wss.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(message)
-      }
     })
   })
   ws.on('close', () => {
