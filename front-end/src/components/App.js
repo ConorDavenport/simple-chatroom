@@ -37,7 +37,7 @@ export default class App extends React.Component {
               exact path='/chat-room'
               render={(props) => (
                 <Room {...props} 
-                  changeName={this.changeName} />
+                  name={this.state.name} />
               )} />
           </Switch>
         </div>
