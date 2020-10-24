@@ -12,10 +12,6 @@ export default class Room extends React.Component {
     client.onopen = () => {
       console.log('WebSocket Connected')
     }
-    client.onmessage = (message) => {
-      var data = message.data
-      console.log(data)
-    }
   }
 
   handleClick() {
@@ -30,7 +26,7 @@ export default class Room extends React.Component {
     return (
       <div>
         <div>{`Hello ${this.props.name}`}</div>
-        <input type='text' id='message'/>
+        <input type='text' id='message' autoComplete='off'/>
         <button onClick={this.handleClick}>Submit</button>
         <Feed client={client}/>
       </div>
