@@ -3,9 +3,8 @@ const app = express()
 const mongoose = require('mongoose')
 const http = require('http')
 const WebSocket = require('ws')
-const User = require('./models/Users')
-const Room = require('./models/Rooms')
 const cors = require('cors')
+const Messages = require('./models/Messages')
 require('dotenv/config')
 
 function time() {
@@ -36,36 +35,17 @@ const wss = new WebSocket.Server({ server })
 // ws = websocket, represents the frontend
 
 wss.on('connection', (ws) => {
-  // when a client connects to the websocket server
-  // add that user to the Users database and send
-  // the client's uuid to the client
-  var id
-  const user = new User()
-  user.save()
-  .then((data) => {
-    id = data._id
-    console.log(time() + `: ${id} Connected`)
-    const initMessage = {
-      type: 'setup',
-      id: id
-    }
-    ws.send(JSON.stringify(initMessage))
-  })
-
+  console.log(`${time()}: Client Connected`)
   //------ EVENT HANDLERS ------
+  // broadcast incoming message to all clients
   ws.on('message', (message) => {
-    console.log(`${time()}: ${id}: ${message}`)
-  })
-  
-  ws.on('close', () => {
-    console.log(time() + `: ${id} Disconnected`)
-    User.deleteOne({_id: id})
-    .catch((err) => {
-      console.log(err)
+    console.log(message)
+    wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(message)
+      }
     })
-  })
-
-  
+  })  
 })
 
 server.listen(PORT, () => {
@@ -79,7 +59,6 @@ mongoose.connect(process.env.DB_CONNECTION,
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => { 
     console.log('Connected to Database')
-    User.deleteMany({}).catch((err) => console.log(err))
-    Room.deleteMany({}).catch((err) => console.log(err))
+    Messages.deleteMany({}).catch((err) => console.log(err))
   }  
 )
