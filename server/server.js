@@ -39,12 +39,25 @@ wss.on('connection', (ws) => {
   //------ EVENT HANDLERS ------
   // broadcast incoming message to all clients
   ws.on('message', (message) => {
-    console.log(message)
+    const msg = JSON.parse(message)
+    console.log(`${time()}: ${message}`)
+    new Messages({
+      user: msg.user,
+      message: msg.message,
+      date: Date.now(),
+    }).save()
+    .catch((err) => {
+      console.log(err)
+    })
+    
     wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(message)
       }
     })
+  })
+  ws.on('close', () => {
+    console.log(`${time()}: Client Disconnected`)
   })  
 })
 
