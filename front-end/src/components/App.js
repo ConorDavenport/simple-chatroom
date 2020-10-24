@@ -13,7 +13,6 @@ export default class App extends React.Component {
     super(props)
     this.state = {
       name: 'User',
-      messages: [],
     }
     this.changeName = this.changeName.bind(this)
   }
