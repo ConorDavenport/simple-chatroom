@@ -51,6 +51,7 @@ wss.on('connection', (ws) => {
       const messageID = m._id
       let parsedMessage = JSON.parse(message)
       parsedMessage.id = messageID
+      parsedMessage.date = Date.now()
       message = JSON.stringify(parsedMessage)
       wss.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
