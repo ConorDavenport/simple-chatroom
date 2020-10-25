@@ -4,6 +4,7 @@ const axios = require('axios')
 
 class Message extends React.Component {
   render() {
+    console.log(this.props)
     return (
       <div>
         <div>{this.props.data.user}</div>
@@ -54,7 +55,7 @@ export default class Feed extends React.Component {
 
   renderFeed() {
     const m = []
-    for (let i = 0; i < this.state.messages.length; i++) {
+    for (let i = this.state.messages.length - 1; i >= 0; i--) {
       m.push(<div key={i} className='message'>
           <Message data={this.state.messages[i]} />
         </div>)
