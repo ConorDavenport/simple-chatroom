@@ -1,4 +1,5 @@
 import React from 'react'
+import './App.css';
 const axios = require('axios')
 
 class Message extends React.Component {
@@ -54,7 +55,7 @@ export default class Feed extends React.Component {
   renderFeed() {
     const m = []
     for (let i = 0; i < this.state.messages.length; i++) {
-      m.push(<div key={i}>
+      m.push(<div key={i} className='message'>
           <Message data={this.state.messages[i]} />
         </div>)
     }
