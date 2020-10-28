@@ -40,14 +40,17 @@ wss.on('connection', (ws) => {
   //------ EVENT HANDLERS ------
   // broadcast incoming message to all clients
   ws.on('message', (message) => {
+    // incoming messages are strings
     const msg = JSON.parse(message)
     console.log(`${time()}: ${message}`)
+    // save new message to database
     new Messages({
       user: msg.user,
       message: msg.message,
       date: Date.now(),
     }).save()
     .then((m) => {
+      // append the database entry id to the message
       const messageID = m._id
       let parsedMessage = JSON.parse(message)
       parsedMessage.id = messageID
@@ -79,6 +82,8 @@ mongoose.connect(process.env.DB_CONNECTION,
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => { 
     console.log('Connected to Database')
+    // clear database on server restart
+    // this is just for test purposes
     Messages.deleteMany({}).catch((err) => console.log(err))
   }  
 )

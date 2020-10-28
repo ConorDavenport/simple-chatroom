@@ -8,6 +8,7 @@ const Messages = require('../models/Messages')
 // responds with the previous messages
 router.get('/messages', (req, res) => {
   const leastRecent = req.query.leastRecent
+  // client sends 0 if they don't have any messages
   if (leastRecent === '0') {
     Messages.find({}).sort({ _id: 'descending'})
     .then((docs) => {
