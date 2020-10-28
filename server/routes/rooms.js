@@ -11,10 +11,13 @@ router.get('/messages', (req, res) => {
   if (leastRecent === '0') {
     Messages.find({}).sort({ _id: 'descending'})
     .then((docs) => {
-      console.log(docs)
+      const data = JSON.stringify(docs[0])
+      res.send(data)
+      res.status(200).end()
     })
     .catch((err) => {
       console.log(err)
+      res.status(500).end()
     })
   } else {
     Messages.findById(leastRecent, (err, docs) => {
