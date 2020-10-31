@@ -10,7 +10,7 @@ router.get('/messages', (req, res) => {
   const leastRecent = req.query.leastRecent
   // client sends 0 if they don't have any messages
   if (leastRecent === '0') {
-    Messages.find({}).sort({ _id: 'descending'})
+    Messages.find({}).sort({ _id: 'descending'}).limit(1)
     .then((docs) => {
       const data = JSON.stringify(docs[0])
       res.send(data)
@@ -21,10 +21,15 @@ router.get('/messages', (req, res) => {
       res.status(500).end()
     })
   } else {
-    Messages.findById(leastRecent, (err, docs) => {
-      console.log(docs)
-      res.send(docs)
+    Messages.find({ _id: { $lt: leastRecent }})
+      .sort({ _id: -1 }).limit(1)
+    .then((docs) => {
+      res.send(docs[0])
       res.status(200).end()
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(500).end()
     })
   }
 })
