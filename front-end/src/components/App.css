@@ -37,8 +37,14 @@
   }
 }
 
+#feed {
+  width: 25%;
+  margin: auto;
+}
+
 .message {
   background-color: #c6e6f1;
+  word-wrap: break-word;
   border-width: 5px;
   border-color: white;
   border-style: solid;
