@@ -51,9 +51,8 @@ wss.on('connection', (ws) => {
     }).save()
     .then((m) => {
       // append the database entry id to the message
-      const messageID = m._id
       let parsedMessage = JSON.parse(message)
-      parsedMessage.id = messageID
+      parsedMessage._id = m._id
       parsedMessage.date = Date.now()
       message = JSON.stringify(parsedMessage)
       wss.clients.forEach((client) => {
