@@ -43,7 +43,7 @@ export default class Feed extends React.Component {
       leastRecentId = 0
     }
     axios.get('http://localhost:8000/rooms/messages',
-    { params: { leastRecent: leastRecentId}})
+    { params: { leastRecent: leastRecentId }})
     .then((res) => {
       console.log(res)
     })
