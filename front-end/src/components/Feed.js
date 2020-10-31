@@ -9,7 +9,7 @@ class Message extends React.Component {
         <div>{this.props.data.user}</div>
         <div>{this.props.data.message}</div>
         <div>{this.props.data.date}</div>
-        <div>{this.props.data.id}</div>
+        <div>{this.props.data._id}</div>
       </div>
     )
   }
@@ -30,22 +30,26 @@ export default class Feed extends React.Component {
       var data = JSON.parse(message.data)
       // slice = shallow copy
       let newStateArray = this.state.messages.slice()
-      newStateArray.push(data)
+      newStateArray.unshift(data)
       this.setState({ messages: newStateArray })
+      console.log(this.state.messages)
     }
   }
 
   loadMore() {
     let leastRecentId
     try {
-      leastRecentId = this.state.messages[0].id
+      leastRecentId = this.state.messages[this.state.messages.length - 1]._id
     } catch {
       leastRecentId = 0
     }
     axios.get('http://localhost:8000/rooms/messages',
     { params: { leastRecent: leastRecentId }})
     .then((res) => {
-      console.log(res)
+      let newStateArray = this.state.messages.slice()
+      newStateArray.push(res.data)
+      this.setState({ messages: newStateArray })
+      console.log(this.state.messages)
     })
     .catch((err) => {
       console.log(err)
@@ -54,7 +58,7 @@ export default class Feed extends React.Component {
 
   renderFeed() {
     const m = []
-    for (let i = this.state.messages.length - 1; i >= 0; i--) {
+    for (let i = 0; i < this.state.messages.length; i++) {
       m.push(<div key={i} className='message'>
           <Message data={this.state.messages[i]} />
         </div>)
