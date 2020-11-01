@@ -39,3 +39,8 @@ request to the server when requesting previous messages by
 sending the id number of the oldest message the client has stored
 . The server queries the database with this id number and returns
 the next oldest message by id.
+
+### Database
+The database is hosted on [mongoDB](www.mongodb.com) and is
+cleared every time the server boots up to avoid running into
+limited storage caps offered by the free tier.
