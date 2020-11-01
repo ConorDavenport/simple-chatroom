@@ -1,49 +1,41 @@
 # simple-chatroom
 The aim of this project is to learn MERN stack development.
+MERN is a JavasScript software stack for building web apps.
 
-- MongoDB
-- Express
-- React
-- Node
+<b>M</b>ongoDB
 
-### WebSockets
-`stream of consciousness`
+<b>E</b>xpress
 
-basically i want to have a custom protocol on top of websockets.
-when a client connects, the server knows the connection only by
-its database id. when the client joins the room they give a name
-but that is only known by the client. we need a way to get the
-name to the server so it can update the database and the other
-users can see it. also since the room request is through http and
-message handling is through websockets, the server doesn't know
-which room the client is sending messages to. this is probably
-a bad idea if there are loads of clients sending messages to
-loads of different rooms through one port but sure what can you
-do. mqtt would get around this with the different topics and all
-that but the free mqtt brokers were unreliable and i didn't want
-to bother setting up my own one, this project is to learn mern
+<b>R</b>eact
 
-so far i can see there being two types of messages; a standard
-message that contains the room number and the payload, and a config message that gives the name of the user to the server
+<b>N</b>ode
 
-i could send the messages as json but if there are loads of
-messages coming in from a bunch of different clients i'm
-wondering if parsing the messages is going to take too long
-```javascript
-{
-  name: userName
-}
+## Front-end
+The client is met with a login page at first. They enter their
+name and press join and they are redirected to the chatroom.
+Upon joining the room the client connects to the websocket
+server.
 
-{
-  room: roomCode,
-  payload: messageContents
-}
-```
-so what if i send the message as a 
+### Websockets
+This is a protocol that allows full-duplex communication over
+a TCP connection. This means that the server can send messages
+to the client without being prompted. A typical TCP connection
+only allows the server to communicate to the client as a response
+to a client request.
 
-#### Byte 0
+The client can send messages to the server over the websocket
+connection. The server then broadcasts this message to all the
+websocket connections.
 
-`0x00` Standard message from client to server
+Incoming messages are displayed in the feed and the user can
+load previous messages using the `More` button.
 
-`0x01` Initial config message from client
-
+## Back-end
+The server sets up a websocket server that all clients connect
+to. When the server recieves a message, it is broadcast to
+all connections, and it saves the message in a database.
+The server also exposes a RESTful API. A client makes a HTTP GET
+request to the server when requesting previous messages by
+sending the id number of the oldest message the client has stored
+. The server queries the database with this id number and returns
+the next oldest message by id.
