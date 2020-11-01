@@ -1,3 +1,5 @@
+@import './colours.css';
+
 .App {
   text-align: center;
 }
@@ -35,6 +37,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+#home {
+  margin-top: 50px;
 }
 
 #feed {
