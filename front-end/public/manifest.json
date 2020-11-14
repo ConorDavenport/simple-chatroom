@@ -1,6 +1,6 @@
 {
   "short_name": "simple-chatroom",
-  "name": "",
+  "name": "chatroom build on mern stack",
   "icons": [
     {
       "src": "favicon.ico",
